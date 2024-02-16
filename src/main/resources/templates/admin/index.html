@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout2"
+    layout:decorate="~{layout2}">
+
+<head>
+    <title>Smart Learn</title>
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body>
+    <div layout:fragment="content2">
+        <H2>Welcome,Admin</H2>
+        <div class="col-md-8">
+            <img th:src="@{/images/img.jpg}" alt="Background" class="img-fluid mb-4" width="8000" height="5000" />
+        </div>
+        <div class="col-md-4 mb-5">
+            <div class="list-group">
+                <a th:href="@{/admin/users}" class="list-group-item list-group-item-action">[[#{user.list.headline}]]</a>
+                <a th:href="@{/admin/roles}" class="list-group-item list-group-item-action">[[#{role.list.headline}]]</a>
+                <a th:href="@{/admin/userProfiles}"
+                    class="list-group-item list-group-item-action">[[#{userProfile.list.headline}]]</a>
+                <a th:href="@{/admin/courses}" class="list-group-item list-group-item-action">[[#{course.list.headline}]]</a>
+                <a th:href="@{/admin/userProgresses}"
+                    class="list-group-item list-group-item-action">[[#{userProgress.list.headline}]]</a>
+                <a th:href="@{/admin/learningContents}"
+                    class="list-group-item list-group-item-action">[[#{learningContent.list.headline}]]</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

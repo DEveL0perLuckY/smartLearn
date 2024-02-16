@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>Smart Learn</title>
+
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{userProfile.edit.headline}]]</h1>
+                <div>
+                    <a th:href="@{/admin/userProfiles}" class="btn btn-secondary">[[#{userProfile.edit.back}]]</a>
+                </div>
+            </div>
+            <div th:replace="~{fragments/forms::globalErrors('userProfile')}" />
+            <form th:action="${requestUri}" method="post">
+                <div th:replace="~{fragments/forms::inputRow(object='userProfile', field='userProfileId', disabled=true, type='number')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='userProfile', field='fullName')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='userProfile', field='dateOfBirth', inputClass='js-datetimepicker')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='userProfile', field='learningStyle')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='userProfile', field='user', type='select')}" />
+                <input type="submit" th:value="#{userProfile.edit.headline}" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </body>
+</html>
