@@ -2,11 +2,9 @@ package com.learningplatform.app.smart_learn.service;
 
 import com.learningplatform.app.smart_learn.domain.Role;
 import com.learningplatform.app.smart_learn.domain.User;
-import com.learningplatform.app.smart_learn.domain.UserProfile;
 import com.learningplatform.app.smart_learn.domain.UserProgress;
 import com.learningplatform.app.smart_learn.model.UserDTO;
 import com.learningplatform.app.smart_learn.repos.RoleRepository;
-import com.learningplatform.app.smart_learn.repos.UserProfileRepository;
 import com.learningplatform.app.smart_learn.repos.UserProgressRepository;
 import com.learningplatform.app.smart_learn.repos.UserRepository;
 import com.learningplatform.app.smart_learn.util.NotFoundException;
@@ -18,21 +16,18 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final UserProfileRepository userProfileRepository;
     private final UserProgressRepository userProgressRepository;
 
     public UserService(final UserRepository userRepository, final RoleRepository roleRepository,
-            final UserProfileRepository userProfileRepository,
+
             final UserProgressRepository userProgressRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.userProfileRepository = userProfileRepository;
         this.userProgressRepository = userProgressRepository;
     }
 
@@ -100,12 +95,7 @@ public class UserService {
         final ReferencedWarning referencedWarning = new ReferencedWarning();
         final User user = userRepository.findById(userId)
                 .orElseThrow(NotFoundException::new);
-        final UserProfile userUserProfile = userProfileRepository.findFirstByUser(user);
-        if (userUserProfile != null) {
-            referencedWarning.setKey("user.userProfile.user.referenced");
-            referencedWarning.addParam(userUserProfile.getUserProfileId());
-            return referencedWarning;
-        }
+
         final UserProgress userUserProgress = userProgressRepository.findFirstByUser(user);
         if (userUserProgress != null) {
             referencedWarning.setKey("user.userProgress.user.referenced");

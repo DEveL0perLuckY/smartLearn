@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout2">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout4">
 
 <head>
     <title>Smart Learn</title>
@@ -29,7 +29,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
 
-                <a th:href="@{/user}" class="navbar-brand">
+                <a th:href="@{/manager}" class="navbar-brand">
                     <img th:src="@{/images/logo.png}" alt="icon" width="30" height="30"
                         class="d-inline-block align-top">
                     <span class="ps-2">SmartLearn</span>
@@ -42,13 +42,9 @@
 
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <ul class="navbar-nav ms-auto">
+
                         <li class="nav-item">
-                            <a th:href="@{/user/explore}" class="nav-link active">
-                                Explore Courses
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a th:href="@{/user/profile}" class="nav-link">
+                            <a th:href="@{/manager/profile}" class="nav-link">
                                 <span>Welcome, <span sec:authentication="principal.username" />!</span>
                             </a>
                         </li>
@@ -65,7 +61,7 @@
             <p th:if="${MSG_SUCCESS}" class="alert alert-success mb-4" role="alert">[[${MSG_SUCCESS}]]</p>
             <p th:if="${MSG_INFO}" class="alert alert-info mb-4" role="alert">[[${MSG_INFO}]]</p>
             <p th:if="${MSG_ERROR}" class="alert alert-danger mb-4" role="alert">[[${MSG_ERROR}]]</p>
-            <div layout:fragment="content2" />
+            <div layout:fragment="content4" />
         </div>
     </main>
     <footer class="footer ">

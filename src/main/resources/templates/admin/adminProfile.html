@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout2"
-    layout:decorate="~{layout2}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout4"
+    layout:decorate="~{layout4}">
 
 <head>
     <title>Smart Learn</title>
 </head>
 
 <body>
-    <div layout:fragment="content2">
+    <div layout:fragment="content4">
 
         <style>
             .form-container {
@@ -22,25 +22,22 @@
             <div class="row justify-content-center">
                 <div class="card">
                     <div class="card-header text-center">
-                        <h2>User Profile</h2>
+                        <h2>Admin Profile</h2>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
                             <label for="username" class="col-sm-2 col-form-label"><strong>UserName:</strong></label>
                             <div class="col-sm-4">
-                                <p id="username" th:text="${user.username}" class="form-control-plaintext"></p>
+                                <p id="username" th:text="${obj.username}" class="form-control-plaintext"></p>
                             </div>
                             <label for="email" class="col-sm-2 col-form-label"><strong>Email:</strong></label>
                             <div class="col-sm-4">
-                                <p id="email" th:text="${user.email}" class="form-control-plaintext"></p>
+                                <p id="email" th:text="${obj.email}" class="form-control-plaintext"></p>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="username" class="col-sm-2 col-form-label"><strong>My Courses:</strong></label>
+                            <label for="roles" class="col-sm-2 col-form-label"><strong>Roles:</strong></label>
                             <div class="col-sm-4">
-                                <p id="username" th:text="${courses}" class="form-control-plaintext"></p>
+                                <p id="roles" class="form-control-plaintext"><span sec:authentication="principal.authorities"/></p>
                             </div>
-                    
                         </div>
                     </div>
                 </div>

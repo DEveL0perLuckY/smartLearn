@@ -13,7 +13,6 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class CourseService {
 
@@ -63,12 +62,16 @@ public class CourseService {
         courseDTO.setCourseId(course.getCourseId());
         courseDTO.setCourseTitle(course.getCourseTitle());
         courseDTO.setCourseDescription(course.getCourseDescription());
+        courseDTO.setCourseDuration(course.getCourseDuration());
+        courseDTO.setCoursePrice(course.getCoursePrice());
         courseDTO.setCourseType(course.getCourseType());
         return courseDTO;
     }
 
     private Course mapToEntity(final CourseDTO courseDTO, final Course course) {
         course.setCourseTitle(courseDTO.getCourseTitle());
+        course.setCourseDuration(courseDTO.getCourseDuration());
+        course.setCoursePrice(courseDTO.getCoursePrice());
         course.setCourseDescription(courseDTO.getCourseDescription());
         course.setCourseType(courseDTO.getCourseType());
         return course;

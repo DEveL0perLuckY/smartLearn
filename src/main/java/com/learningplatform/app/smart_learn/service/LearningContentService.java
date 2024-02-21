@@ -6,10 +6,10 @@ import com.learningplatform.app.smart_learn.model.LearningContentDTO;
 import com.learningplatform.app.smart_learn.repos.CourseRepository;
 import com.learningplatform.app.smart_learn.repos.LearningContentRepository;
 import com.learningplatform.app.smart_learn.util.NotFoundException;
+
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class LearningContentService {
@@ -53,23 +53,26 @@ public class LearningContentService {
         learningContentRepository.deleteById(contentId);
     }
 
-    private LearningContentDTO mapToDTO(final LearningContent learningContent,
+    public LearningContentDTO mapToDTO(final LearningContent learningContent,
             final LearningContentDTO learningContentDTO) {
         learningContentDTO.setContentId(learningContent.getContentId());
         learningContentDTO.setContentTitle(learningContent.getContentTitle());
         learningContentDTO.setContentDescription(learningContent.getContentDescription());
-        learningContentDTO.setContentType(learningContent.getContentType());
-        learningContentDTO.setCourse(learningContent.getCourse() == null ? null : learningContent.getCourse().getCourseId());
+        learningContentDTO.setHasImage(
+                (learningContent.getPostImage() != null) && (learningContent.getPostImage().length > 0) ? true : false);
+        learningContentDTO.setUnit(learningContent.getUnit());
+        learningContentDTO
+                .setCourse(learningContent.getCourse() == null ? null : learningContent.getCourse().getCourseId());
         return learningContentDTO;
     }
 
-    private LearningContent mapToEntity(final LearningContentDTO learningContentDTO,
+    public LearningContent mapToEntity(final LearningContentDTO learningContentDTO,
             final LearningContent learningContent) {
         learningContent.setContentTitle(learningContentDTO.getContentTitle());
         learningContent.setContentDescription(learningContentDTO.getContentDescription());
-        learningContent.setContentType(learningContentDTO.getContentType());
-        final Course course = learningContentDTO.getCourse() == null ? null : courseRepository.findById(learningContentDTO.getCourse())
-                .orElseThrow(() -> new NotFoundException("course not found"));
+        final Course course = learningContentDTO.getCourse() == null ? null
+                : courseRepository.findById(learningContentDTO.getCourse())
+                        .orElseThrow(() -> new NotFoundException("course not found"));
         learningContent.setCourse(course);
         return learningContent;
     }
