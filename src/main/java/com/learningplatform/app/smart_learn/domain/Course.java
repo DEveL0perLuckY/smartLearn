@@ -34,4 +34,6 @@ public class Course {
     @DocumentReference(lazy = true, lookup = "{ 'course' : ?#{#self._id} }")
     @ReadOnlyProperty
     private Set<LearningContent> courseLearningContents;
+
+    // todo images
 }

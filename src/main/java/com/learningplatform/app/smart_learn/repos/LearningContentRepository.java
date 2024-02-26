@@ -2,12 +2,14 @@ package com.learningplatform.app.smart_learn.repos;
 
 import com.learningplatform.app.smart_learn.domain.Course;
 import com.learningplatform.app.smart_learn.domain.LearningContent;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import java.util.List;
 
 public interface LearningContentRepository extends MongoRepository<LearningContent, Integer> {
 
     LearningContent findFirstByCourse(Course course);
 
-    List<LearningContent> findByCourse(Course course);
+    Page<LearningContent> findByCourse(Course course, Pageable pageable);
 }

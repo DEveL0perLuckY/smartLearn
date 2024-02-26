@@ -70,6 +70,7 @@ public class LearningContentService {
             final LearningContent learningContent) {
         learningContent.setContentTitle(learningContentDTO.getContentTitle());
         learningContent.setContentDescription(learningContentDTO.getContentDescription());
+        learningContent.setUnit(learningContentDTO.getUnit());
         final Course course = learningContentDTO.getCourse() == null ? null
                 : courseRepository.findById(learningContentDTO.getCourse())
                         .orElseThrow(() -> new NotFoundException("course not found"));

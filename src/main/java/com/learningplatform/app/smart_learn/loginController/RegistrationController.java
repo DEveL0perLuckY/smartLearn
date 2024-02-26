@@ -16,9 +16,12 @@ import com.learningplatform.app.smart_learn.repos.RoleRepository;
 import com.learningplatform.app.smart_learn.repos.UserRepository;
 import com.learningplatform.app.smart_learn.util.WebUtils;
 
+import org.apache.catalina.authenticator.Constants;
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -57,11 +60,28 @@ public class RegistrationController {
             return "Pages/SingUp";
         }
 
-        Role roleUser = rolesRepository.findById(Constant.ROLE_USER)
-                .orElseThrow(() -> new IllegalStateException("User role not found"));
+        Optional<Role> roleUser = rolesRepository.findById(Constant.ROLE_USER);
 
         Set<Role> roles = new HashSet<>();
-        roles.add(roleUser);
+        if (roleUser.isPresent()) {
+            roles.add(roleUser.get());
+        } else {
+            Role admin = new Role();
+            admin.setRoleId(Constant.ROLE_ADMIN);
+            admin.setName("ROLE_ADMIN");
+
+            Role manager = new Role();
+            manager.setRoleId(Constant.ROLE_MANAGER);
+            manager.setName("ROLE_MANAGER");
+
+            Role user = new Role();
+            user.setRoleId(Constant.ROLE_USER);
+            user.setName("ROLE_USER");
+
+            // Save all roles in the repository
+            rolesRepository.saveAll(Arrays.asList(admin, manager, user));
+            roles.add(user);
+        }
         User user = new User();
         try {
             user.setUsername(userDTO.getUsername());

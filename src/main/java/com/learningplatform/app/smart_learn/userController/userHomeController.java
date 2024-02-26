@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import com.learningplatform.app.smart_learn.domain.Course;
 import com.learningplatform.app.smart_learn.domain.LearningContent;
@@ -171,7 +173,7 @@ public class userHomeController {
     @GetMapping("/learningContent/{courseId}")
     public String getLearningContent(Model model, @PathVariable(name = "courseId") final Integer courseId,
             @RequestParam(defaultValue = "0") int page, final RedirectAttributes redirectAttributes) {
-        int pageSize = 1;
+        int PAGE_SIZE = 2;
 
         Course course = courseRepository.findById(courseId).orElse(null);
 
@@ -182,17 +184,16 @@ public class userHomeController {
 
         model.addAttribute("courseObject", course);
 
-        List<LearningContent> x = learningContentRepository.findByCourse(course);
-        Page<LearningContent> learningContentPage = new PageImpl<>(x, PageRequest.of(page, pageSize), x.size());
+        Page<LearningContent> x = learningContentRepository.findByCourse(course, PageRequest.of(page, PAGE_SIZE));
 
-        model.addAttribute("learningContentPage", learningContentPage.getContent().get(page));
+        model.addAttribute("learningContentPage", x);
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", learningContentPage.getTotalPages());
+        model.addAttribute("totalPages", x.getTotalPages());
 
         int nextPage = page + 1;
         int previousPage = page - 1;
         int firstPage = 0;
-        int lastPage = learningContentPage.getTotalPages() - 1;
+        int lastPage = x.getTotalPages() - 1;
 
         model.addAttribute("firstPageUrl", "/user/learningContent/" + courseId + "?page=" + firstPage);
         model.addAttribute("previousPageUrl", "/user/learningContent/" + courseId + "?page=" + previousPage);
@@ -206,6 +207,14 @@ public class userHomeController {
         model.addAttribute("endPage", endPage);
 
         return "userHome/userLearningContent";
+    }
+
+    @GetMapping("/LearningContent/image/{id}")
+    public ResponseEntity<byte[]> getPost(@PathVariable("id") int id, Model model) {
+        LearningContent post = learningContentRepository.findById(id).get();
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(post.getPostImage());
     }
 
 }

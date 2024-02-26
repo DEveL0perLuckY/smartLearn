@@ -26,5 +26,5 @@ public class LearningContent {
 
     @DocumentReference(lazy = true)
     private Course course;
-
+    // todo upload date time
 }

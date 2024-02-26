@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.learningplatform.app.smart_learn.domain.Course;
 import com.learningplatform.app.smart_learn.domain.LearningContent;
 import com.learningplatform.app.smart_learn.domain.User;
 import com.learningplatform.app.smart_learn.model.CourseDTO;
@@ -96,7 +99,7 @@ public class managerHomeController {
         redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("course.update.success"));
         return "redirect:/manager/courses";
     }
-
+    // todo delete the course
     // @PostMapping("/courses/delete/{courseId}")
     // public String delete(@PathVariable(name = "courseId") final Integer courseId,
     // final RedirectAttributes redirectAttributes) {
@@ -123,22 +126,57 @@ public class managerHomeController {
     @Autowired
     CourseRepository courseRepository;
 
-    @GetMapping("/LearningContent/{courseId}")
-    public String getmanageCourseData(@PathVariable(name = "courseId") final Integer courseId, final Model model) {
-        System.out.println("Course number: " + courseId);
-        model.addAttribute("courseObj", courseRepository.findById(courseId).get());
-        model.addAttribute("learningContentList",
-                courseRepository.findById(courseId).get().getCourseLearningContents().stream()
-                        .map((obj) -> learningContentService.mapToDTO(obj, new LearningContentDTO()))
-                        .collect(Collectors.toList()));
-        LearningContentDTO contentDTO = new LearningContentDTO();
-        contentDTO.setCourse(courseId);
-        model.addAttribute("obj", contentDTO);
+    @GetMapping("/learningContent/{courseId}")
+    public String getmanageCourseDataget(@PathVariable(name = "courseId") final Integer courseId, final Model model,
+            final RedirectAttributes redirectAttributes, @RequestParam(defaultValue = "0") int page) {
+
+        int PAGE_SIZE = 3;
+
+        Course course = courseRepository.findById(courseId).orElse(null);
+
+        if (course == null) {
+            redirectAttributes.addFlashAttribute(WebUtils.MSG_ERROR, WebUtils.getMessage("Error, something is wrong."));
+            return "redirect:/manager"; // You can replace "errorPage" with the actual error page name
+        }
+
+        model.addAttribute("courseObj", course);
+
+        Page<LearningContent> x = learningContentRepository.findByCourse(course, PageRequest.of(page, PAGE_SIZE));
+
+        model.addAttribute("learningContentList", x);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", x.getTotalPages());
+
+        int nextPage = page + 1;
+        int previousPage = page - 1;
+        int firstPage = 0;
+        int lastPage = x.getTotalPages() - 1;
+
+        model.addAttribute("firstPageUrl", "/manager/learningContent/" + courseId + "?page=" + firstPage);
+        model.addAttribute("previousPageUrl", "/manager/learningContent/" + courseId + "?page=" + previousPage);
+        model.addAttribute("nextPageUrl", "/manager/learningContent/" + courseId + "?page=" + nextPage);
+        model.addAttribute("lastPageUrl", "/manager/learningContent/" + courseId + "?page=" + lastPage);
+
+        int startPage = Math.max(0, page - 2);
+        int endPage = Math.min(lastPage, page + 4);
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
         return "managerHome/learningContent";
     }
 
-    @PostMapping("/LearningContent")
-    public String addFolderData(@ModelAttribute("obj") LearningContentDTO learningContentDTO,
+    @GetMapping("/learningContentAdd/{courseId}")
+    public String getmanageCourseAdd(@PathVariable(name = "courseId") final Integer courseId, final Model model) {
+        model.addAttribute("courseObj", courseRepository.findById(courseId).get());
+        LearningContentDTO contentDTO = new LearningContentDTO();
+        contentDTO.setCourse(courseId);
+        model.addAttribute("obj", contentDTO);
+        return "managerHome/learningContentAdd";
+    }
+
+    @PostMapping("/learningContent")
+    public String learningContentpost(@ModelAttribute("obj") LearningContentDTO learningContentDTO,
             final RedirectAttributes redirectAttributes, @RequestParam("file") MultipartFile file) throws IOException {
         try {
             LearningContent learningContent = new LearningContent();
@@ -149,28 +187,65 @@ public class managerHomeController {
                 learningContent.setPostImage(file.getBytes());
             }
             learningContentRepository.save(learningContent);
-            System.out.println("i an here");
+
         } catch (Exception e) {
         }
         redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS,
-                WebUtils.getMessage("Course Added successfully"));
-        return "redirect:/manager/LearningContent/" + learningContentDTO.getCourse();
+                WebUtils.getMessage("Learning Content Added successfully"));
+        return "redirect:/manager/learningContent/" + learningContentDTO.getCourse();
     }
 
-    // @GetMapping("/LearningContent/delete/{imageId}")
-    // public String deleteFolderImage(@PathVariable Integer imageId, final
-    // RedirectAttributes redirectAttributes) {
-    // imageRepository.deleteById(imageId);
-    // redirectAttributes.addFlashAttribute(WebUtils.MSG_ERROR,
-    // WebUtils.getMessage("Delete data successfully"));
-    // return "redirect:/user/folders";
-    // }
+    @GetMapping("/learningContent/delete/{learningContentId}")
+    public String LearningContentDelete(@PathVariable(name = "learningContentId") final Integer learningContentId,
+            final RedirectAttributes redirectAttributes, final Model model) {
 
-    @GetMapping("/LearningContent/image/{id}")
+        int a = learningContentRepository.findById(learningContentId).get().getCourse().getCourseId();
+        learningContentRepository.deleteById(learningContentId);
+
+        redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS,
+                WebUtils.getMessage("Learning Content Delete successfully"));
+
+        return "redirect:/manager/learningContent/" + a;
+    }
+
+    @GetMapping("/learningContent/image/{id}")
     public ResponseEntity<byte[]> getPost(@PathVariable("id") int id, Model model) {
         LearningContent post = learningContentRepository.findById(id).get();
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(post.getPostImage());
     }
+
+    @GetMapping("/learningContent/edit/{learningContentId}")
+    public String LearningContentEdit(@PathVariable(name = "learningContentId") final Integer learningContentId,
+            final Model model) {
+
+        model.addAttribute("learningContent", learningContentService
+                .mapToDTO(learningContentRepository.findById(learningContentId).get(), new LearningContentDTO()));
+        return "managerHome/learningContentEdit";
+    }
+
+    @PostMapping("/learningContent/edit/{learningContentId}")
+    public String LearningContentEditPost(@PathVariable(name = "learningContentId") final Integer learningContentId,
+            @ModelAttribute("learningContent") @Valid final LearningContentDTO learningContentDTO,
+            final BindingResult bindingResult, final RedirectAttributes redirectAttributes,
+            @RequestParam("file") MultipartFile file) throws IOException {
+        if (bindingResult.hasErrors()) {
+            return "managerHome/learningContentEdit";
+        }
+        LearningContent learningContent = new LearningContent();
+        learningContent = learningContentService.mapToEntity(learningContentDTO, new LearningContent());
+        learningContent.setContentId(learningContentId);
+
+        if (file != null && !file.isEmpty()) {
+            learningContent.setPostImage(file.getBytes());
+        } else {
+            learningContent.setPostImage(learningContentRepository.findById(learningContentId).get().getPostImage());
+        }
+        learningContentRepository.save(learningContent);
+        redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS,
+                WebUtils.getMessage("Learning Content update successfully"));
+        return "redirect:/manager/learningContent/" + learningContentDTO.getCourse();
+    }
+
 }
