@@ -11,6 +11,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 @Profile("dev")
+@SuppressWarnings("null")
 @EnableMongoRepositories("com.learningplatform.app.smart_learn.repos")
 public class MongoConfigDev {
 
