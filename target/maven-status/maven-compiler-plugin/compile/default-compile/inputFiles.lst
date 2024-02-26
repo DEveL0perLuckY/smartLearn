@@ -12,7 +12,6 @@ C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_l
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\adminController\AdminController.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\adminController\CourseController.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\service\CourseService.java
-C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\config\MongoConfig.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\loginController\LoginController.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\service\UserService.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\repos\LearningContentListener.java
@@ -21,11 +20,13 @@ C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_l
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\config\JacksonConfig.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\security\CustomUserDetailsService.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\adminController\UserController.java
+C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\config\MongoConfigDev.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\repos\CourseRepository.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\domain\User.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\domain\Role.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\managerController\managerHomeController.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\loginController\RegistrationController.java
+C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\config\MongoConfigProd.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\util\WebUtils.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\service\LearningContentService.java
 C:\Users\lucky\Desktop\SmartLearn\src\main\java\com\learningplatform\app\smart_learn\util\CustomCollectors.java

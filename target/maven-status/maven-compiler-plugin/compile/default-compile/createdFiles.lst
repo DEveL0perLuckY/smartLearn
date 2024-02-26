@@ -1,4 +1,5 @@
 com\learningplatform\app\smart_learn\model\UserDTO.class
+com\learningplatform\app\smart_learn\config\MongoConfigDev.class
 com\learningplatform\app\smart_learn\loginController\RegistrationController.class
 com\learningplatform\app\smart_learn\service\LearningContentService.class
 com\learningplatform\app\smart_learn\domain\UserProgress.class
@@ -16,6 +17,7 @@ com\learningplatform\app\smart_learn\util\WebAdvice.class
 com\learningplatform\app\smart_learn\util\CustomCollectors.class
 com\learningplatform\app\smart_learn\model\UserProgressDTO.class
 com\learningplatform\app\smart_learn\domain\PrimarySequence.class
+com\learningplatform\app\smart_learn\config\MongoConfigProd.class
 com\learningplatform\app\smart_learn\adminController\RoleController.class
 com\learningplatform\app\smart_learn\repos\UserRepository.class
 com\learningplatform\app\smart_learn\rest\UserProgressResource.class
@@ -37,7 +39,6 @@ com\learningplatform\app\smart_learn\model\ErrorResponse.class
 com\learningplatform\app\smart_learn\util\NotFoundException.class
 com\learningplatform\app\smart_learn\domain\Course.class
 com\learningplatform\app\smart_learn\repos\LearningContentRepository.class
-com\learningplatform\app\smart_learn\config\MongoConfig.class
 com\learningplatform\app\smart_learn\security\customSuccessHandler.class
 com\learningplatform\app\smart_learn\userController\userHomeController.class
 com\learningplatform\app\smart_learn\loginController\LoginController.class
