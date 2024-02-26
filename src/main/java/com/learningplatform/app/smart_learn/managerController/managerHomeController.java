@@ -1,7 +1,6 @@
 package com.learningplatform.app.smart_learn.managerController;
 
 import java.io.IOException;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

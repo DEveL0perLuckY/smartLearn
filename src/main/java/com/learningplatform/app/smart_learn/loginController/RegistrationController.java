@@ -16,8 +16,6 @@ import com.learningplatform.app.smart_learn.repos.RoleRepository;
 import com.learningplatform.app.smart_learn.repos.UserRepository;
 import com.learningplatform.app.smart_learn.util.WebUtils;
 
-import org.apache.catalina.authenticator.Constants;
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

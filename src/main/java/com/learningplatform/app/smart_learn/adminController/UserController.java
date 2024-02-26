@@ -14,7 +14,6 @@ import com.learningplatform.app.smart_learn.util.WebUtils;
 import jakarta.validation.Valid;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
