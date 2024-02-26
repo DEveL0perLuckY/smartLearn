@@ -206,7 +206,7 @@ public class userHomeController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        return "userHome/userLearningContent";
+        return "userHome/userLC";
     }
 
     @GetMapping("/LearningContent/image/{id}")

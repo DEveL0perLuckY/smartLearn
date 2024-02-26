@@ -21,17 +21,17 @@ public class HomeController {
 
     @GetMapping("/")
     public String getHome() {
-        return "Home/home";
+        return "home/home";
     }
 
     @GetMapping("/about")
     public String getAbout() {
-        return "Home/about";
+        return "home/about";
     }
 
     @GetMapping("/contact")
     public String getContact() {
-        return "Home/contact";
+        return "home/contact";
     }
 
     @GetMapping("/courses")
@@ -58,7 +58,7 @@ public class HomeController {
         model.addAttribute("cs", csCourses);
         model.addAttribute("web", webDevelopmentCourses);
         model.addAttribute("other", otherCourses);
-        return "Home/Courses";
+        return "home/Courses";
     }
 
 }
