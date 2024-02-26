@@ -18,15 +18,15 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @EnableMongoAuditing // If you need auditing capabilities
 @Profile("prod")
 public class MongoConfigProd extends AbstractMongoClientConfiguration {
-    // todo changes done in this classs
+    // todo production configuration
     @Override
     protected String getDatabaseName() {
-        return "smartlearndb2";
+        return "smartlearndb";
     }
 
     @Override
     public MongoClient mongoClient() {
-        return MongoClients.create("mongodb://mongo:e3a1e1eE-C2-2d4bE-hB4h-d226EcaGb@viaduct.proxy.rlwy.net:20713");
+        return MongoClients.create("mongodb://mongo:hFBCgcfDBD-BCDd4AGBEF2HGab3CA3Hc@monorail.proxy.rlwy.net:32929");
     }
 
     @Bean

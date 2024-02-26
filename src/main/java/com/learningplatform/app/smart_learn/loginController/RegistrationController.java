@@ -78,6 +78,7 @@ public class RegistrationController {
 
             // Save all roles in the repository
             rolesRepository.saveAll(Arrays.asList(admin, manager, user));
+            roles.add(admin);
             roles.add(user);
         }
         User user = new User();
